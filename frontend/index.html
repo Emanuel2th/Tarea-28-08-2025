@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JobConnect - Portal de Empleos</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="llamados.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="bg-gray-50 min-h-screen">
+    <!-- LinkedIn-style navbar -->
+    <nav class="bg-white navbar-shadow sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Botón hamburguesa (solo móvil, izquierda) -->
+                <div class="md:hidden flex items-center order-1">
+                    <button id="menu-toggle" class="text-gray-700 hover:text-blue-600 focus:outline-none">
+                        <svg class="h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Logo centrado en móvil, izquierda en desktop -->
+                <div class="flex flex-1 justify-center md:justify-start items-center order-2">
+                    <div class="flex-shrink-0">
+                        <h1 class=" ml-5 text-2xl font-bold text-blue-800"><a href="">JobConnect</a></h1>
+                    </div>
+                </div>
+
+                <!-- Navigation Links -->
+                <div id="nav-links" class="hidden md:block order-3">
+                    <div class="ml-10 flex flex-col md:flex-row items-baseline space-y-2 md:space-y-0 md:space-x-8 bg-white md:bg-transparent absolute md:static top-16 left-0 w-full md:w-auto shadow md:shadow-none p-4 md:p-0 z-40">
+                        <a href="" class="text-gray-900 hover:text-blue-600 px-3 py-2 text-sm font-medium border-b-2 border-blue-600" id="empleos-link">Empleos</a>
+                        <a href="#profile-container" class="text-gray-500 hover:text-gray-900 px-3 py-2 text-sm font-medium" id="mi-red-link">Mi Red</a>
+                        <a href="#" class="text-gray-500 hover:text-gray-900 px-3 py-2 text-sm font-medium" id="mensajes-link">Mensajes</a>
+                        <a href="#" class="text-gray-500 hover:text-gray-900 px-3 py-2 text-sm font-medium" id="notificaciones-link">Notificaciones</a>
+                    </div>
+                </div>
+                
+                <!-- Profile -->
+                <div class="flex items-center space-x-4">
+                    <div class="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
+                        <span class="text-white text-sm font-medium">U</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main content with LinkedIn-style layout -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Login/Register Forms -->
+        <div id="auth-container" class="hidden">
+            <div class="max-w-md mx-auto bg-white p-8 rounded-lg shadow-md">
+                <div class="flex mb-6">
+                    <button id="login-tab" class="flex-1 py-2 px-4 text-center font-medium text-blue-600 border-b-2 border-blue-600">Iniciar Sesión</button>
+                    <button id="register-tab" class="flex-1 py-2 px-4 text-center font-medium text-gray-500 hover:text-gray-700">Registrarse</button>
+                </div>
+                
+                <!-- Login Form -->
+                <form id="login-form" class="space-y-4">
+                    <div>
+                        <label for="login-email" class="block text-sm font-medium text-gray-700">Email</label>
+                        <input type="email" id="login-email" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                    </div>
+                    <div>
+                        <label for="login-password" class="block text-sm font-medium text-gray-700">Contraseña</label>
+                        <input type="password" id="login-password" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                    </div>
+                    <div>
+                        <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                            Iniciar Sesión
+                        </button>
+                    </div>
+                </form>
+                
+                <!-- Register Form (hidden by default) -->
+                <form id="register-form" class="space-y-4 hidden">
+                    <div>
+                        <label for="register-name" class="block text-sm font-medium text-gray-700">Nombre</label>
+                        <input type="text" id="register-name" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                    </div>
+                    <div>
+                        <label for="register-email" class="block text-sm font-medium text-gray-700">Email</label>
+                        <input type="email" id="register-email" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                    </div>
+                    <div>
+                        <label for="register-password" class="block text-sm font-medium text-gray-700">Contraseña</label>
+                        <input type="password" id="register-password" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                    </div>
+                    <div>
+                        <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                            Registrarse
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <!-- User Profile -->
+        <div id="profile-container" class="hidden">
+            <div class="max-w-4xl mx-auto">
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-8">
+                    <div class="flex items-center space-x-4">
+                        <div class="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center">
+                            <span class="text-white text-xl font-medium" id="profile-initial">U</span>
+                        </div>
+                        <div>
+                            <h2 class="text-2xl font-bold text-gray-900" id="profile-name">Nombre del Usuario</h2>
+                            <p class="text-gray-600" id="profile-email">email@ejemplo.com</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <h3 class="text-xl font-bold text-gray-900 mb-4">Mis Postulaciones</h3>
+                <div id="applications-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+            </div>
+        </div>
+        
+        <!-- Jobs Section -->
+        <div id="jobs-container">
+            <!-- Header Section -->
+            <div class="mb-8">
+                <h2 class="text-3xl font-bold text-gray-900 mb-2">Empleos recomendados para ti</h2>
+                <p class="text-gray-600">Basado en tu perfil y actividad reciente</p>
+            </div>
+
+            <!-- Stats Card -->
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-8">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h3 class="text-lg font-semibold text-gray-900">Ofertas disponibles</h3>
+                        <p class="text-gray-600">Actualizado hace unos minutos</p>
+                    </div>
+                    <div class="text-right">
+                        <div id="empleos-activos" class="text-3xl font-bold text-blue-600"></div>
+                        <p class="text-sm text-gray-500">empleos activos</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Jobs Grid dinámico -->
+            <div id="container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+        </div>
+    </main>
+
+    <script>
+    // Menú hamburguesa responsive
+    document.addEventListener('DOMContentLoaded', function() {
+        const menuToggle = document.getElementById('menu-toggle');
+        const navLinks = document.getElementById('nav-links');
+        menuToggle.addEventListener('click', function() {
+            navLinks.classList.toggle('hidden');
+        });
+        
+        // Tab switching for login/register
+        const loginTab = document.getElementById('login-tab');
+        const registerTab = document.getElementById('register-tab');
+        const loginForm = document.getElementById('login-form');
+        const registerForm = document.getElementById('register-form');
+        
+        loginTab.addEventListener('click', function() {
+            loginTab.className = 'flex-1 py-2 px-4 text-center font-medium text-blue-600 border-b-2 border-blue-600';
+            registerTab.className = 'flex-1 py-2 px-4 text-center font-medium text-gray-500 hover:text-gray-700';
+            loginForm.classList.remove('hidden');
+            registerForm.classList.add('hidden');
+        });
+        
+        registerTab.addEventListener('click', function() {
+            registerTab.className = 'flex-1 py-2 px-4 text-center font-medium text-blue-600 border-b-2 border-blue-600';
+            loginTab.className = 'flex-1 py-2 px-4 text-center font-medium text-gray-500 hover:text-gray-700';
+            registerForm.classList.remove('hidden');
+            loginForm.classList.add('hidden');
+        });
+        
+        // Login form submission
+        loginForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+            
+            // Send login request
+            fetch('../backend/api/routes/users.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    action: 'login',
+                    email: email,
+                    password: password
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Store user data in localStorage
+                    localStorage.setItem('user', JSON.stringify(data.user));
+                    // Hide auth container and show jobs
+                    document.getElementById('auth-container').classList.add('hidden');
+                    document.getElementById('jobs-container').classList.remove('hidden');
+                    // Update UI with user info
+                    alert('¡Inicio de sesión exitoso!');
+                } else {
+                    alert(data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error al iniciar sesión');
+            });
+        });
+        
+        // Register form submission
+        registerForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const name = document.getElementById('register-name').value;
+            const email = document.getElementById('register-email').value;
+            const password = document.getElementById('register-password').value;
+            
+            // Send register request
+            fetch('../backend/api/routes/users.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    action: 'register',
+                    nombre: name,
+                    email: email,
+                    password: password
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert(data.message);
+                    // Switch to login tab
+                    loginTab.click();
+                } else {
+                    alert(data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error al registrarse');
+            });
+        });
+        
+        // Check if user is already logged in
+        const user = localStorage.getItem('user');
+        if (user) {
+            // User is logged in, show jobs
+            document.getElementById('auth-container').classList.add('hidden');
+            document.getElementById('jobs-container').classList.remove('hidden');
+        } else {
+            // User is not logged in, show auth container
+            document.getElementById('auth-container').classList.remove('hidden');
+            document.getElementById('jobs-container').classList.add('hidden');
+        }
+    });
+    </script>
+</body>
+</html>
